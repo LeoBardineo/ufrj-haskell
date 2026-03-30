@@ -15,4 +15,14 @@ removeNull [] = []
 removeNull xs = filter (not . null) xs
 
 media :: [Float] -> Float
-media l = sum l / fromIntegral(length l)
+media xs = sum xs / fromIntegral(length xs)
+
+maxAvg :: [[Float]] -> Float
+maxAvg [x] = media x
+maxAvg (x:xs) | (media(x) >= maxAvg(xs)) = media(x)
+maxAvg (x:xs) | otherwise = maxAvg(xs)
+
+-- maxAvgList :: [[Float]] -> [Float]
+-- maxAvgList [x] = x
+-- maxAvgList (x:xs) | (media(x) >= maxAvgList(xs)) = x
+-- maxAvgList (x:xs) | otherwise = maxAvgList(xs)
