@@ -2,6 +2,7 @@
 {- loop :: [a] -> [a] -> [a]
 loop acc [] = acc
 loop acc (x:xs) = loop (x:acc) xs -}
+-- https://wiki.haskell.org/Foldr_Foldl_Foldl%27
 
 rev :: [a] -> [a]
 rev xs = loop [] xs
@@ -32,3 +33,25 @@ suml' = dobral updateAcc initAcc
     where
         initAcc = 0
         updateAcc = (+)
+
+fib :: Integer -> Integer
+fib n = loop (0,1) n
+    where
+        loop (b0, b1) 0 = b1
+        loop (b0, b1) n = loop (b1, b0+b1) (n-1)
+
+-- [..] !! n (pegar n elemento)
+
+meuapply :: (a -> b) -> a -> b
+meuapply f x = f x
+
+meupipe :: a -> (a -> b) -> b
+meupipe x f = f x 
+
+domau :: a -> b
+domau x = domau x
+
+todososnumeros :: [Integer]
+todososnumeros = 0 : map (+1) todososnumeros
+
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
