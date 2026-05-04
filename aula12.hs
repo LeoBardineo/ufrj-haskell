@@ -32,19 +32,27 @@ hamming = [1,2,3,5] ++ multiplos2 ++ multiplos3 ++ multiplos5
         multiplos3 = map (*3) (hamming)
         multiplos5 = map (*5) (hamming)
 
+msort :: [Integer] -> [Integer]
+msort [] = []
+msort [x] = [x]
+msort xs = mergesorted(leftlist(xs) rightlist(xs))
+
 mergesorted :: [Integer] -> [Integer] -> [Integer]
 mergesorted [] ly = ly
 mergesorted lx [] = lx
 mergesorted [x] [y] = if x <= y then [x,y] else [y,x]
-mergesorted lx ly = mergesorted $ (mergesorted leftlist(lx) rightlist(lx)) (mergesorted leftlist(ly) rightlist(ly))
--- mergesorted (x:xs) (y:ys) =
---     if x <= y then
---         x : y : mergesorted xs ys
---     else
---         y : x : mergesorted xs ys
+--mergesorted lx ly = mergesorted (mergesorted leftlist(lx) rightlist(lx)) (mergesorted leftlist(ly) rightlist(ly))
+mergesorted (x:xs) (y:ys) =
+    if x <= y then
+        x : y : mergesorted xs ys
+    else
+        y : x : mergesorted xs ys
+
 
 {-
 mergesort([1, 2, 4, 6, 7] [2, 3, 4, 8, 9])
+mergesort([1, 2] [4, 6, 7]) mergesort([2, 3] [4, 8, 9])
+[4, 6, 7] => [4] [6, 7]
 mergesort([1, 2] [4, 6, 7]) mergesort([2, 3] [4, 8, 9])
 -}
 
