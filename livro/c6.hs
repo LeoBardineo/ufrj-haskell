@@ -11,17 +11,19 @@ halve xs = (leftlist, rightlist)
 msort :: Ord a => [a] -> [a]
 msort [] = []
 msort [x] = [x]
-msort xs = merge ll rl
+msort xs = merge (msort ll) (msort rl)
     where
         (ll, rl) = halve xs
 
 merge :: Ord a => [a] -> [a] -> [a]
 merge [] rl = rl
 merge ll [] = ll
-merge [x] [y] = if x <= y then [x,y] else [y,x]
-merge xs ys = merge ll rl
-    where 
-        (llxs, rlxs) = halve xs
-        (llys, rlys) = halve ys
-        ll = merge llxs rlxs
-        rl = merge llys rlys
+merge (x:xs) (y:ys) =
+    if x <= y then
+        x : merge xs (y:ys)
+    else
+        y : merge (x:xs) ys
+
+and' :: [Bool] -> Bool
+and' [] = True
+and' (p:ps) = p && and' ps
