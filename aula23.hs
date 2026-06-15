@@ -103,14 +103,26 @@ basta provar
 1.  ∀n P(Leaf n)
 2.  se vale P(l) ^ P(r)
     então vale P(Node l r)
-exercício: P(t) = ∀nx (flatten' t n s = flatten t ++ ns)
+exercício: P(t) = ∀nx (flatten' t ns = flatten t ++ ns)
 
 caso (Leaf n):
-flatten t ++ ns
-[n] ++ ns
+flatten' t ns   = flatten t ++ ns
+                = [n] ++ ns
+                = (n : ns)
 
 caso (Node l r):
-flatten t ++ ns
-flatten l ++ flatten r ++ ns
+flatten' t ns   = flatten t ++ ns
+                = flatten l ++ flatten r ++ ns
+                = flatten l ++ (flatten r ++ ns)
+                = flatten' l (flatten r ++ ns)
+                = flatten' l (flatten' r ns)
+
+resolução:
+1) ∀ns (flatten' (Leaf n) ns = flatten (Leaf n) ++ ns)
+
+2) Assumindo
+    H1: ∀ns (flatten' l ns = flatten l ++ ns)       a especificação vale para a árvore da esquerda
+    H2: ∀ns (flatten' r ns = flatten r ++ ns)       a especificação vale para a árvore da direita
+então flatten' (Node lr) ns = flatten (Node lr) ++ ns
 
 -}
